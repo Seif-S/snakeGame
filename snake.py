@@ -42,7 +42,7 @@ def main():
             if stageMap[Heady][Headx + 1] is not wall and stageMap[Heady][Headx + 1] is not snake:
                 if stageMap[Heady][Headx + 1] == food:
                     score += 1
-                    spawnFood(stageMap, food, borderWidth, borderHeight)
+                    stageMap = spawnFood(stageMap, food, borderWidth, borderHeight)
                 else:
                     stageMap[Taily][Tailx] = ' '
                     snakePos.pop(0)
@@ -55,7 +55,7 @@ def main():
             if stageMap[Heady - 1][Headx] is not wall and stageMap[Heady - 1][Headx] is not snake:
                 if stageMap[Heady - 1][Headx] == food:
                     score += 1
-                    spawnFood(stageMap, food, borderWidth, borderHeight)
+                    stageMap = spawnFood(stageMap, food, borderWidth, borderHeight)
                 else:
                     stageMap[Taily][Tailx] = ' '
                     snakePos.pop(0)
@@ -68,7 +68,7 @@ def main():
             if stageMap[Heady][Headx - 1] is not wall and stageMap[Heady][Headx - 1] is not snake:
                 if stageMap[Heady][Headx - 1] == food:
                     score += 1
-                    spawnFood(stageMap, food, borderWidth, borderHeight)
+                    stageMap = spawnFood(stageMap, food, borderWidth, borderHeight)
                 else:
                     stageMap[Taily][Tailx] = ' '
                     snakePos.pop(0)
@@ -81,7 +81,7 @@ def main():
             if stageMap[Heady + 1][Headx] is not wall and stageMap[Heady + 1][Headx] is not snake:
                 if stageMap[Heady + 1][Headx] == food:
                     score += 1
-                    spawnFood(stageMap, food, borderWidth, borderHeight)
+                    stageMap = spawnFood(stageMap, food, borderWidth, borderHeight)
                 else:
                     stageMap[Taily][Tailx] = ' '
                     snakePos.pop(0)
@@ -99,10 +99,10 @@ def clear():
         os.system('clear')
 
 def spawnFood(stage, food, width, height):
-    foodPosX = random.randrange(1, width)
-    foodPosY = random.randrange(1, height)
     while True:
-        if stage[foodPosY][foodPosX] is not ' ':
+        foodPosX = random.randrange(1, width)
+        foodPosY = random.randrange(1, height)
+        if stage[foodPosY][foodPosX] != ' ':
             continue
         else:
             stage[foodPosY][foodPosX] = food
