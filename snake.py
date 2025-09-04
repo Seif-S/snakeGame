@@ -1,6 +1,7 @@
 import os
 import time
 import keyboard
+import random
 
 def main():
     snake = 'o'
@@ -10,7 +11,6 @@ def main():
     wall = '#'
     borderWidth = 10
     borderHeight = 10
-    stageMap = []
     clear = lambda: os.system('cls')
 
     keyboard.add_hotkey('up', up)
@@ -18,19 +18,13 @@ def main():
     keyboard.add_hotkey('down', down)
     keyboard.add_hotkey('right', right)
 
-    for i in range(borderHeight):
-        stageMap.append([])
-        for index in range(borderWidth):
-            if i == 0 or i+1 == borderHeight or index == 0 or index+1 == borderWidth:
-                stageMap[i].append(wall)
-                continue
-            else:
-                stageMap[i].append(' ')
-                continue
+    stageMap = initDrawMap(wall, borderWidth, borderHeight)
 
     for i in range(snakeLenght):
         snakePos.append((2, 2 + i))
         stageMap[2][2 + i] = snake
+
+    stageMap = spawnFood(stageMap, food, borderWidth, borderHeight)
 
     global lastKey 
     lastKey = 'right'
@@ -50,7 +44,6 @@ def main():
                 snakePos.append((Heady, Headx + 1))
                 snakePos.pop(0)
             else:
-                print('Game over')
                 break
         
         if lastKey == 'up':
@@ -60,7 +53,6 @@ def main():
                 snakePos.append((Heady - 1, Headx))
                 snakePos.pop(0)
             else:
-                print('Game over')
                 break
 
         if lastKey == 'left':
@@ -70,7 +62,6 @@ def main():
                 snakePos.append((Heady, Headx - 1))
                 snakePos.pop(0)
             else:
-                print('Game over')
                 break
 
         if lastKey == 'down':
@@ -80,9 +71,37 @@ def main():
                 snakePos.append((Heady + 1, Headx))
                 snakePos.pop(0)
             else:
-                print('Game over')
                 break
         time.sleep(1)
+    print('Game over')
+
+def spawnFood(stage, food, width, height):
+    foodPosX = random.randrange(1, width)
+    foodPosY = random.randrange(1, height)
+    while True:
+        if stage[foodPosY][foodPosX] is not ' ':
+            continue
+        else:
+            stage[foodPosY][foodPosX] = food
+            break
+    return stage
+
+def initDrawMap(object: str, width: int, height: int) -> list:
+    # create the basic layout of the map
+    stageMap = []
+    for i in range(height):
+        stageMap.append([])
+        for index in range(width):
+            if i == 0 or i + 1 == height or index == 0 or index + 1 == width:
+                stageMap[i].append(object)
+                continue
+            else:
+                stageMap[i].append(' ')
+                continue
+    return stageMap
+
+def drawMap():
+    pass
 
 def up():
     global lastKey 
