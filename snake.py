@@ -11,7 +11,7 @@ def main():
     wall = '#'
     borderWidth = 10
     borderHeight = 10
-    clear = lambda: os.system('cls')
+    score = 0
 
     keyboard.add_hotkey('up', up)
     keyboard.add_hotkey('left', left)
@@ -31,49 +31,68 @@ def main():
 
     while True:
         clear()
+        print(f'Score: {score}')
         for i in stageMap:
             print(' '.join(map(str, i)))
 
         Heady, Headx = snakePos[-1]
         Taily, Tailx = snakePos[0]
-
+        
         if lastKey == 'right':
             if stageMap[Heady][Headx + 1] is not wall and stageMap[Heady][Headx + 1] is not snake:
+                if stageMap[Heady][Headx + 1] == food:
+                    score += 1
+                else:
+                    stageMap[Taily][Tailx] = ' '
+                    snakePos.pop(0)
                 stageMap[Heady][Headx + 1] = snake
-                stageMap[Taily][Tailx] = ' '
                 snakePos.append((Heady, Headx + 1))
-                snakePos.pop(0)
             else:
                 break
         
         if lastKey == 'up':
             if stageMap[Heady - 1][Headx] is not wall and stageMap[Heady - 1][Headx] is not snake:
+                if stageMap[Heady][Headx + 1] == food:
+                    score += 1
+                else:
+                    stageMap[Taily][Tailx] = ' '
+                    snakePos.pop(0)
                 stageMap[Heady - 1][Headx] = snake
-                stageMap[Taily][Tailx] = ' '
                 snakePos.append((Heady - 1, Headx))
-                snakePos.pop(0)
             else:
                 break
 
         if lastKey == 'left':
             if stageMap[Heady][Headx - 1] is not wall and stageMap[Heady][Headx - 1] is not snake:
+                if stageMap[Heady][Headx + 1] == food:
+                    score += 1
+                else:
+                    stageMap[Taily][Tailx] = ' '
+                    snakePos.pop(0)
                 stageMap[Heady][Headx - 1] = snake
-                stageMap[Taily][Tailx] = ' '
                 snakePos.append((Heady, Headx - 1))
-                snakePos.pop(0)
             else:
                 break
 
         if lastKey == 'down':
             if stageMap[Heady + 1][Headx] is not wall and stageMap[Heady + 1][Headx] is not snake:
+                if stageMap[Heady][Headx + 1] == food:
+                    score += 1
+                else:
+                    stageMap[Taily][Tailx] = ' '
+                    snakePos.pop(0)
                 stageMap[Heady + 1][Headx] = snake
-                stageMap[Taily][Tailx] = ' '
                 snakePos.append((Heady + 1, Headx))
-                snakePos.pop(0)
             else:
                 break
         time.sleep(1)
     print('Game over')
+
+def clear():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
 
 def spawnFood(stage, food, width, height):
     foodPosX = random.randrange(1, width)
@@ -100,9 +119,6 @@ def initDrawMap(object: str, width: int, height: int) -> list:
                 continue
     return stageMap
 
-def drawMap():
-    pass
-
 def up():
     global lastKey 
     lastKey = 'up'
@@ -118,7 +134,6 @@ def down():
 def right():
     global lastKey
     lastKey = 'right'
-
 
 if __name__ == '__main__':
     main()
