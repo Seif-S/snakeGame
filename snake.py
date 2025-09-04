@@ -42,6 +42,7 @@ def main():
             if stageMap[Heady][Headx + 1] is not wall and stageMap[Heady][Headx + 1] is not snake:
                 if stageMap[Heady][Headx + 1] == food:
                     score += 1
+                    spawnFood(stageMap, food, borderWidth, borderHeight)
                 else:
                     stageMap[Taily][Tailx] = ' '
                     snakePos.pop(0)
@@ -52,8 +53,9 @@ def main():
         
         if lastKey == 'up':
             if stageMap[Heady - 1][Headx] is not wall and stageMap[Heady - 1][Headx] is not snake:
-                if stageMap[Heady][Headx + 1] == food:
+                if stageMap[Heady - 1][Headx] == food:
                     score += 1
+                    spawnFood(stageMap, food, borderWidth, borderHeight)
                 else:
                     stageMap[Taily][Tailx] = ' '
                     snakePos.pop(0)
@@ -64,8 +66,9 @@ def main():
 
         if lastKey == 'left':
             if stageMap[Heady][Headx - 1] is not wall and stageMap[Heady][Headx - 1] is not snake:
-                if stageMap[Heady][Headx + 1] == food:
+                if stageMap[Heady][Headx - 1] == food:
                     score += 1
+                    spawnFood(stageMap, food, borderWidth, borderHeight)
                 else:
                     stageMap[Taily][Tailx] = ' '
                     snakePos.pop(0)
@@ -76,8 +79,9 @@ def main():
 
         if lastKey == 'down':
             if stageMap[Heady + 1][Headx] is not wall and stageMap[Heady + 1][Headx] is not snake:
-                if stageMap[Heady][Headx + 1] == food:
+                if stageMap[Heady + 1][Headx] == food:
                     score += 1
+                    spawnFood(stageMap, food, borderWidth, borderHeight)
                 else:
                     stageMap[Taily][Tailx] = ' '
                     snakePos.pop(0)
