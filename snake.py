@@ -12,6 +12,7 @@ def main():
     borderWidth = 10
     borderHeight = 10
     score = 0
+    gameSpeed = 1
 
     keyboard.add_hotkey('up', up)
     keyboard.add_hotkey('left', left)
@@ -68,6 +69,7 @@ def main():
             if stageMap[Heady][Headx - 1] is not wall and stageMap[Heady][Headx - 1] is not snake:
                 if stageMap[Heady][Headx - 1] == food:
                     score += 1
+                    gameSpeed = 1 - (score / 20) * 0.02
                     stageMap = spawnFood(stageMap, food, borderWidth, borderHeight)
                 else:
                     stageMap[Taily][Tailx] = ' '
@@ -89,7 +91,7 @@ def main():
                 snakePos.append((Heady + 1, Headx))
             else:
                 break
-        time.sleep(1)
+        time.sleep(gameSpeed)
     print('Game over')
 
 def clear():
